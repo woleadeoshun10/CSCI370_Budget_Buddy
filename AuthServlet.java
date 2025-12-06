@@ -62,4 +62,33 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
+        private void processLogin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        if (username == null || username.trim().isEmpty() ||
+            password == null || password.trim().isEmpty()) {
+            request.setAttribute("error", "Please enter both username and password.");
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+            return;
+        }
+        
+        User user = UserDAO.authenticate(username.trim(), password);
+        
+        if (user != null) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+            session.setAttribute("userId", user.getUserId());
+            session.setMaxInactiveInterval(30 * 60); // 30 minutes
+            
+            response.sendRedirect(request.getContextPath() + "/dashboard");
+        } else {
+            request.setAttribute("error", "Invalid username or password.");
+            request.setAttribute("username", username);
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+        }
+    }
+
 }
