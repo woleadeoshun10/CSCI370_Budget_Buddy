@@ -15,4 +15,4 @@
 | T-1.5: Create AuthServlet.java (signup POST)      |                    |             |                 |                 |
 | T-2.2: Create AuthServlet (login/logout)          |                    |             |                 |                 |
 | T-2.4: Implement session management - Person A    |                    |             |                 |                 |
-| T-5.1: Create DashboardServlet (basic) - Person A |                    |             |                 |                 |
+| T-5.1: Create DashboardServlet (basic) - Person A |                    |             | 12/6            |                 |
