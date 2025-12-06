@@ -7,7 +7,6 @@ import java.sql.*;
 
 public class UserDAO {
 
-
     // Create a new user
     public static User create(User user) {
         String sql = "INSERT INTO users (username, email, password_hash, hourly_wage, monthly_budget, knowledge_level) " +
@@ -44,4 +43,39 @@ public class UserDAO {
         }
         return null;
     }
+
+    public static User authenticate(String username, String password) {
+        User user = findByUsername(username);
+        
+        if (user != null) {
+            String hashedInput = DatabaseUtil.hashPassword(password);
+            if (hashedInput.equals(user.getPasswordHash())) {
+                updateLastLogin(user.getUserId());
+                return user;
+            }
+        }
+        return null;
+    }
+
+
+    // Update last login timestamp
+    public static boolean updateLastLogin(int userId) {
+        String sql = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE user_id = ?";
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        
+        try {
+            conn = DatabaseUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseUtil.close(conn, stmt);
+        }
+        return false;
+    }
+
 }
