@@ -62,7 +62,7 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
-        private void processLogin(HttpServletRequest request, HttpServletResponse response)
+    private void processLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String username = request.getParameter("username");
