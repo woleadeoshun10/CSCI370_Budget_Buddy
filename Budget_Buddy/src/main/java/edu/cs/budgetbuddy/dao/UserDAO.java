@@ -44,6 +44,80 @@ public class UserDAO {
         return null;
     }
 
+    public static User findByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DatabaseUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToUser(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseUtil.close(conn, stmt, rs);
+        }
+        return null;
+    }
+
+
+    public static User findById(int userId) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DatabaseUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToUser(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseUtil.close(conn, stmt, rs);
+        }
+        return null;
+    }
+
+    public static boolean usernameExists(String username) {
+        return findByUsername(username) != null;
+    }
+
+    public static boolean emailExists(String email) {
+        String sql = "SELECT user_id FROM users WHERE email = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DatabaseUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseUtil.close(conn, stmt, rs);
+        }
+        return false;
+    }
+
     public static User authenticate(String username, String password) {
         User user = findByUsername(username);
         
@@ -76,6 +150,21 @@ public class UserDAO {
             DatabaseUtil.close(conn, stmt);
         }
         return false;
+    }
+
+    // Helper method that converts a ResultSet row into a fully populated User object.
+    private static User mapResultSetToUser(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getInt("user_id"),
+                rs.getString("username"),
+                rs.getString("email"),
+                rs.getString("password_hash"),
+                rs.getBigDecimal("hourly_wage"),
+                rs.getBigDecimal("monthly_budget"),
+                rs.getString("knowledge_level"),
+                rs.getTimestamp("created_at"),
+                rs.getTimestamp("last_login")
+        );
     }
 
 }
