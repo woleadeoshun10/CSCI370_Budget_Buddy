@@ -1,12 +1,11 @@
-<!--Adewole-->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="edu.cs.budgetbuddy.model.User" %>
 
-<!-- grabbing user from request/session -->
+<%-- grabbing user from request/session --%>
 <%
     User user = (User) request.getAttribute("user");
     if (user == null) {
-        <!-- if user not logged in, just send them back to login -->
+        // if user not logged in, just send them back to login
         response.sendRedirect(request.getContextPath() + "/auth?action=login");
         return;
     }
@@ -19,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Buddy - Dashboard</title>
 
-    <!-- embedded css directly -->
+    <%-- embedded css directly  --%>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -109,27 +108,27 @@
 
 <body>
 
-    <!-- navbar  -->
+    <%-- navbar --%>
     <nav class="navbar">
         <h1>💰 Budget Buddy</h1>
         <div>
-            <!-- show username -->
+            <%-- show username --%>
             <span style="color: white;">Welcome, <%= user.getUsername() %></span>
-            <!-- logout link -->
+            <%-- logout link --%>
             <a href="${pageContext.request.contextPath}/auth?action=logout">Logout</a>
         </div>
     </nav>
 
-    <!-- main container -->
+    <%-- main container --%>
     <div class="container">
 
-        <!-- welcome section -->
+        <%-- welcome section --%>
         <div class="welcome">
             <h2>Welcome to Budget Buddy! 🎉</h2>
             <p>Sprint 1 Complete - You can now sign up and log in!</p>
         </div>
 
-        <!-- big stats row -->
+        <%-- big stats row --%>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="icon">🔥</div>
@@ -153,13 +152,13 @@
             </div>
         </div>
 
-        <!-- sprint 2 coming soon -->
+        <%-- sprint 2 coming soon --%>
         <div class="info-box">
             <h3>🚧 Coming in Sprint 2</h3>
             <p>The Friction Calculator - Enter a purchase amount and see how many work hours it costs you!</p>
         </div>
 
-        <!-- user's profile info -->
+        <%-- user's profile info --%>
         <div class="user-info">
             <h3>Your Profile</h3>
             <p><strong>Username:</strong> <%= user.getUsername() %></p>
