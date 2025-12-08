@@ -96,9 +96,9 @@ public class AuthServlet extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirm_password");
-        BigDecimal hourlyWage = new BigDecimal(request.getParameter("hourly_wage"));
-        BigDecimal monthlyBudget = new BigDecimal(request.getParameter("monthly_budget"));
+        String confirmPassword = request.getParameter("confirmPassword");
+        BigDecimal hourlyWage = new BigDecimal(request.getParameter("hourlyWage"));
+        BigDecimal monthlyBudget = new BigDecimal(request.getParameter("monthlyBudget"));
         
         // Form submission validation
         if (username == null || username.trim().isEmpty() ||
