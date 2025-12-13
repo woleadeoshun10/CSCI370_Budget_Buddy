@@ -3,6 +3,7 @@ package edu.cs.budgetbuddy.dao;
 import edu.cs.budgetbuddy.model.User;
 import edu.cs.budgetbuddy.util.DatabaseUtil;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class UserDAO {
@@ -212,6 +213,11 @@ public class UserDAO {
                 rs.getBigDecimal("hourly_wage"),
                 rs.getBigDecimal("monthly_budget"),
                 rs.getString("knowledge_level"),
+                rs.getInt("current_streak"),
+                rs.getInt("longest_streak"),
+                rs.getBigDecimal("total_saved"),
+                rs.getInt("skip_count"),
+                rs.getInt("buy_count"),
                 rs.getTimestamp("created_at"),
                 rs.getTimestamp("last_login")
         );
