@@ -1,26 +1,31 @@
-| Sprint 3 Burn-Down Chart - Jeffy (Person B)                                  |                           |            |                |       |
-|------------------------------------------------------------------------------|---------------------------|------------|----------------|-------|
-| Due: Thursday, December 18th at 11:59 PM                                     |                           |            |                |       |
-| Total Tasks: 5  (Sprint 1 Tasks completed early)                             |                           |            |                |       |
-|                                                                              |                           |            |                |       |
-| **Burn-Down Data**                                                           |                           |            |                |       |
-| Day                                                                          | Date                      | Work Hours | Ideal Remaining | Actual |
-| Day 1                                                                        | Sun Dec 7                 |            | 5              | 2     |
-| Day 2                                                                        | Mon Dec 8                 |            | 2              | 0     |
-| Day 3                                                                        | Tue Dec 9                 |            | 0              | 0     |
-| Day 4                                                                        | Wed Dec 10                |            | 0              | 0     |
-| Day 5                                                                        | Thu Dec 11                |            | 0              | 0     |
-| Day 6                                                                        | Fri Dec 12                |            | 0              | 0     |
-| Day 7                                                                        | Sat Dec 13                |            | 0              | 0     |
-|                                                                              |                 |            |                |       |
-| **Person B Tasks:**                                                          | **Task Completion Date:** |            |                |       |
-| T-4.1: Create NudgeLog.java model                                            | 12/07/2025                |            |                |       |
-| T-4.2: Create NudgeLogDAO.java                                               | 12/07/2025                |            |                |       |
-| T-5.4: Add skip rate calculation to NudgeLogDAO                              | 12/07/2025                |            |                |       |
-| T-10.1: Add recordSkip() to UserDAO (Same as T-4.5)                          | 12/08/2025                |            |                |       |
-| T-10.2: Add recordBuy() to UserDAO (Same as T-4.5)                           | 12/08/2025                |            |                |       |
-|                                                                              |                 |            |                |       |
-| Note: Jeffy will begin constructing Sprint 3 models and DAOs starting Dec 10 |                 |            |                |       |
+| Sprint 3 Burn-Down Chart - Jeffy (Person B)      |                           |            |                 |        |
+|--------------------------------------------------|---------------------------|------------|-----------------|--------|
+| Due: Thursday, December 18th at 11:59 PM         |                           |            |                 |        |
+| Total Tasks: 9  (Sprint 2 Tasks completed early) |                           |            |                 |        |
+|                                                  |                           |            |                 |        |
+| **Burn-Down Data**                               |                           |            |                 |        |
+| Day                                              | Date                      | Work Hours | Ideal Remaining | Actual |
+| Day 1                                            | Wed Dec 10                | 8AM-4PM    | 9               | 8      |
+| Day 2                                            | Thu Dec 11                | 11AM-5PM   | 7               | 7      |
+| Day 3                                            | Fri Dec 12                | 9AM-5PM    | 5               | 7      |
+| Day 4                                            | Sat Dec 13                | 8AM-4PM    | 3               | -      |
+| Day 5                                            | Sun Dec 14                |            | 3               | -      |
+| Day 6                                            | Mon Dec 15                |            | 3               | -      |
+| Day 7                                            | Tue Dec 16                | 11AM-5PM   | 3               | -      |
+| Day 8                                            | Wed Dec 17                | 8AM-4PM    | 0               | -      |
+|                                                  |                           |            |                 |        |
+| **Person B Tasks:**                              | **Task Completion Date:** |            |                 |        |
+| T-6.1: Create Goal.java model                    |                           |            |                 |        |
+| T-6.2: Create GoalDAO.java                       |                           |            |                 |        |
+| T-7.1: Create Transaction.java model             | 12/10/2025                |            |                 |        |
+| T-7.2: Create TransactionDAO.java                | 12/11/2025                |            |                 |        |
+| T-8.1: Add findByUserId() to TransactionDAO      |                 |            |                 |        |
+| T-11.1: Add updateProfile() to UserDAO           |                 |            |                 |        |
+| Sprint Completion: Deploy to Test Server         |                 |            |                 |        |
+| Fix critical bugs (if applicable)                |                 |            |                 |        |
+| Ensure all deliverables are completed            |                 |            |                 |        |
+|                                                  |                           |            |                 |        |
+
 
 
 
