@@ -12,20 +12,47 @@ public class User {
     private String passwordHash;
     private BigDecimal hourlyWage;
     private BigDecimal monthlyBudget;
-    private String knowledgeLevel;
+    private KnowledgeLevel knowledgeLevel;
     private int currentStreak;
     private int longestStreak;
     private BigDecimal totalSaved;
     private int skipCount;
     private int buyCount;
+    private String commitmentMessage;
+    private String futureSelfMessage;
     private Timestamp createdAt;
     private Timestamp lastLogin;
+
+    public enum KnowledgeLevel {
+        BEGINNER("beginner"),
+        INTERMEDIATE("intermediate"),
+        ADVANCED("advanced");
+
+        private final String dbValue;
+
+        KnowledgeLevel(String dbValue) {
+            this.dbValue = dbValue;
+        }
+
+        public String getDbValue() {
+            return dbValue;
+        }
+
+        public static KnowledgeLevel fromDbValue(String value) {
+            for (KnowledgeLevel level : values()) {
+                if (level.dbValue.equalsIgnoreCase(value)) {
+                    return level;
+                }
+            }
+            return BEGINNER; // Defaulted
+        }
+    }
     
     // Default constructor
     public User() {
         this.hourlyWage = new BigDecimal("15.00");
         this.monthlyBudget = new BigDecimal("500.00");
-        this.knowledgeLevel = "beginner";
+        this.knowledgeLevel = KnowledgeLevel.BEGINNER;
         this.currentStreak = 0;
         this.longestStreak = 0;
         this.totalSaved = BigDecimal.ZERO;
@@ -41,9 +68,11 @@ public class User {
     }
 
     public User(int userId, String username, String email, String passwordHash,
-                BigDecimal hourlyWage, BigDecimal monthlyBudget, String knowledgeLevel,
+                BigDecimal hourlyWage, BigDecimal monthlyBudget, KnowledgeLevel knowledgeLevel,
                 int currentStreak, int longestStreak, BigDecimal totalSaved,
-                int skipCount, int buyCount, Timestamp createdAt, Timestamp lastLogin) {
+                int skipCount, int buyCount, String commitmentMessage, String futureSelfMessage,
+                Timestamp createdAt, Timestamp lastLogin) {
+
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -56,6 +85,8 @@ public class User {
         this.totalSaved = totalSaved;
         this.skipCount = skipCount;
         this.buyCount = buyCount;
+        this.commitmentMessage = commitmentMessage;
+        this.futureSelfMessage = futureSelfMessage;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
     }
@@ -66,6 +97,41 @@ public class User {
         }
         return amount.divide(hourlyWage, 2, RoundingMode.HALF_UP);
     }
+
+    public double getSkipRate() {
+        int total = skipCount + buyCount;
+        if (total == 0) {
+            return 0.0;
+        }
+        return (skipCount * 100.0) / total;
+    }
+
+
+    public void incrementStreak() {
+        this.currentStreak++;
+        if (this.currentStreak > this.longestStreak) {
+            this.longestStreak = this.currentStreak;
+        }
+    }
+
+
+    public void breakStreak() {
+        this.currentStreak = 0;
+    }
+
+
+    public void recordSkip(BigDecimal amount) {
+        this.skipCount++;
+        this.totalSaved = this.totalSaved.add(amount);
+        incrementStreak();
+    }
+
+
+    public void recordBuy() {
+        this.buyCount++;
+        breakStreak();
+    }
+
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
@@ -84,9 +150,9 @@ public class User {
     
     public BigDecimal getMonthlyBudget() { return monthlyBudget; }
     public void setMonthlyBudget(BigDecimal monthlyBudget) { this.monthlyBudget = monthlyBudget; }
-    
-    public String getKnowledgeLevel() { return knowledgeLevel; }
-    public void setKnowledgeLevel(String knowledgeLevel) { this.knowledgeLevel = knowledgeLevel; }
+
+    public KnowledgeLevel getKnowledgeLevel() { return knowledgeLevel; }
+    public void setKnowledgeLevel(KnowledgeLevel knowledgeLevel) { this.knowledgeLevel = knowledgeLevel; }
     
     public int getCurrentStreak() { return currentStreak; }
     public void setCurrentStreak(int currentStreak) { this.currentStreak = currentStreak; }
@@ -102,6 +168,12 @@ public class User {
     
     public int getBuyCount() { return buyCount; }
     public void setBuyCount(int buyCount) { this.buyCount = buyCount; }
+
+    public String getCommitmentMessage() { return commitmentMessage; }
+    public void setCommitmentMessage(String commitmentMessage) { this.commitmentMessage = commitmentMessage; }
+
+    public String getFutureSelfMessage() { return futureSelfMessage; }
+    public void setFutureSelfMessage(String futureSelfMessage) { this.futureSelfMessage = futureSelfMessage; }
     
     public Timestamp getCreatedAt() { return createdAt; }
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
