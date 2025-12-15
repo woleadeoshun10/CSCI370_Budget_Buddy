@@ -165,6 +165,35 @@ public class NudgeLogDAO {
         return 0;
     }
 
+     public static BigDecimal getTotalWorkHoursSaved(int userId) {
+        String sql = "SELECT COALESCE(SUM(work_hours), 0) as total FROM nudge_logs " +
+                     "WHERE user_id = ? AND decision = 'skip'";
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = DatabaseUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getBigDecimal("total");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("NudgeLogDAO.getTotalWorkHoursSaved() error: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            DatabaseUtil.close(conn, stmt, rs);
+        }
+        
+        return BigDecimal.ZERO;
+    }
+
     private static NudgeLog mapResultSetToNudgeLog(ResultSet rs) throws SQLException {
         return new NudgeLog(
             rs.getInt("log_id"),

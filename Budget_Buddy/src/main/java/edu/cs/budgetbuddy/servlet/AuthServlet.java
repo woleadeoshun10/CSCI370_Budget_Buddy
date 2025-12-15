@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import edu.cs.budgetbuddy.dao.UserDAO;
 import edu.cs.budgetbuddy.model.User;
+import edu.cs.budgetbuddy.model.User.KnowledgeLevel;
 import edu.cs.budgetbuddy.util.DatabaseUtil;
 
 //Get login and signup info.
