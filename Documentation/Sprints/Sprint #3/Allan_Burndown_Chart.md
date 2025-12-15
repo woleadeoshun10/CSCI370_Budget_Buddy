@@ -13,8 +13,8 @@
 | Day 6                                             | Thu Dec 18         | 3PM-10:30PM | 0               |                 |
 |                                                   |                    |             |                 |                 |
 | **Person A Tasks:**                               |                    |             | **Task Completion Date:** |                 |
-| T-6.3: Create GoalServlet.java - Person A                 |                 |                 |                 |                 |
-| T-7.3: Create TransactionServlet.java - Person A          |                 |                 |                 |                 |
-| T-8.2: Add history view to TransactionServlet - Person A  |                 |                 |                 |                 |
-| T-9.1: Implement 3-tier nudge messages - Person A         |                 |                 |                 |                 |
+| T-6.3: Create GoalServlet.java - Person A                 |                 |                 | 12/13/2025      |                 |
+| T-7.3: Create TransactionServlet.java - Person A          |                 |                 | 12/13/2025      |                 |
+| T-8.2: Add history view to TransactionServlet - Person A  |                 |                 | 12/15/2025      |                 |
+| T-9.1: Implement 3-tier nudge messages - Person A         |                 |                 | 12/15/2025      |                 |
 | T-11.2: Add profile action to AuthServlet - Person A      |                 |                 |                 |                 |

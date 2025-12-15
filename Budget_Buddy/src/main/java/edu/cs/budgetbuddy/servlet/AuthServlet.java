@@ -1,8 +1,7 @@
 package edu.cs.budgetbuddy.servlet;
 
-import edu.cs.budgetbuddy.dao.UserDAO;
-import edu.cs.budgetbuddy.model.User;
-import edu.cs.budgetbuddy.util.DatabaseUtil;
+import java.io.IOException;
+import java.math.BigDecimal;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.math.BigDecimal;
+
+import edu.cs.budgetbuddy.dao.UserDAO;
+import edu.cs.budgetbuddy.model.User;
+import edu.cs.budgetbuddy.util.DatabaseUtil;
 
 //Get login and signup info.
 @WebServlet("/auth")
@@ -26,20 +27,19 @@ public class AuthServlet extends HttpServlet {
         
         switch (action) {
             case "login":
-                request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                showLoginPage(request, response);
                 break;
             case "signup":
-                request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
+                showSignupPage(request, response);
                 break;
             case "logout":
-                HttpSession session = request.getSession(false);
-                if (session != null) {
-                    session.invalidate();
-                }
-                response.sendRedirect(request.getContextPath() + "/auth?action=login");
+                logout(request, response);
+                break;
+            case "profile":
+                showProfilePage(request, response);
                 break;
             default:
-                request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                showLoginPage(request, response);
         }
     }
 
@@ -57,9 +57,61 @@ public class AuthServlet extends HttpServlet {
             case "signup":
                 processSignup(request, response);
                 break;
+            case "profile":
+                processProfileUpdate(request, response);
+                break;
             default:
-                request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                showLoginPage(request, response);
         }
+    }
+
+    private void showLoginPage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        // If already logged in, redirect to dashboard
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            response.sendRedirect(request.getContextPath() + "/dashboard");
+            return;
+        }
+        
+        request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+    }
+
+    private void showSignupPage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
+    }
+
+    private void showProfilePage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        // Must be logged in
+        User user = getLoggedInUser(request);
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/auth?action=login");
+            return;
+        }
+        
+        // Refresh user data from database
+        User freshUser = UserDAO.findById(user.getUserId());
+        request.getSession().setAttribute("user", freshUser);
+        request.setAttribute("user", freshUser);
+        
+        request.getRequestDispatcher("/jsp/profile.jsp").forward(request, response);
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            System.out.println("AuthServlet: Logging out user");
+            session.invalidate();
+        }
+        
+        response.sendRedirect(request.getContextPath() + "/auth?action=login&message=logged_out");
     }
 
     private void processLogin(HttpServletRequest request, HttpServletResponse response)
@@ -165,5 +217,74 @@ public class AuthServlet extends HttpServlet {
             request.setAttribute("error", "Failed to create account. Please try again.");
             request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
         }
+    }
+
+    private void processProfileUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        User user = getLoggedInUser(request);
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/auth?action=login");
+            return;
+        }
+        
+        String hourlyWageStr = request.getParameter("hourlyWage");
+        String monthlyBudgetStr = request.getParameter("monthlyBudget");
+        String knowledgeLevelStr = request.getParameter("knowledgeLevel");
+        String commitmentMessage = request.getParameter("commitmentMessage");
+        String futureSelfMessage = request.getParameter("futureSelfMessage");
+        
+        try {
+            // Update user object
+            if (hourlyWageStr != null && !hourlyWageStr.trim().isEmpty()) {
+                user.setHourlyWage(new BigDecimal(hourlyWageStr.trim()));
+            }
+            if (monthlyBudgetStr != null && !monthlyBudgetStr.trim().isEmpty()) {
+                user.setMonthlyBudget(new BigDecimal(monthlyBudgetStr.trim()));
+            }
+            if (knowledgeLevelStr != null && !knowledgeLevelStr.trim().isEmpty()) {
+                user.setKnowledgeLevel(KnowledgeLevel.fromDbValue(knowledgeLevelStr));
+            }
+            if (commitmentMessage != null) {
+                user.setCommitmentMessage(commitmentMessage.trim());
+            }
+            if (futureSelfMessage != null) {
+                user.setFutureSelfMessage(futureSelfMessage.trim());
+            }
+            
+            // Save to database
+            boolean success = UserDAO.updateProfile(user);
+            
+            if (success) {
+                // Update session with new data
+                request.getSession().setAttribute("user", user);
+                request.setAttribute("success", "Profile updated successfully!");
+            } else {
+                request.setAttribute("error", "Failed to update profile. Please try again.");
+            }
+            
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid number format for wage or budget.");
+        }
+        
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("/jsp/profile.jsp").forward(request, response);
+    }
+
+    private User getLoggedInUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            return (User) session.getAttribute("user");
+        }
+        return null;
+    }
+
+    private void preserveSignupFormData(HttpServletRequest request, 
+                                        String username, String email,
+                                        String hourlyWage, String monthlyBudget) {
+        if (username != null) request.setAttribute("username", username);
+        if (email != null) request.setAttribute("email", email);
+        if (hourlyWage != null) request.setAttribute("hourlyWage", hourlyWage);
+        if (monthlyBudget != null) request.setAttribute("monthlyBudget", monthlyBudget);
     }
 }
