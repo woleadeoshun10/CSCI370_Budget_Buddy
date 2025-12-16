@@ -26,29 +26,58 @@ public class DatabaseUtil {
     static {
         try {
             Class.forName(JDBC_DRIVER);
+            System.out.println("MySQL JDBC Driver loaded successfully.");
         } catch (ClassNotFoundException e) {
+            System.err.println("ERROR: MySQL JDBC Driver not found!");
+            e.printStackTrace();
             throw new RuntimeException("Failed to load MySQL driver", e);
         }
     }
     
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
+        System.out.println("DatabaseUtil: Attempting to connect to " + DB_NAME + "...");
+        Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
+        System.out.println("DatabaseUtil: Connection established successfully.");
+        return conn;
     }
     
     public static void close(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
-            try { rs.close(); } catch (SQLException e) { /* ignore */ }
+            try {
+                rs.close();
+                System.out.println("DatabaseUtil: ResultSet closed.");
+            } catch (SQLException e) {
+                System.err.println("Error closing ResultSet: " + e.getMessage());
+            }
         }
+
+
         if (stmt != null) {
-            try { stmt.close(); } catch (SQLException e) { /* ignore */ }
+            try {
+                stmt.close();
+                System.out.println("DatabaseUtil: PreparedStatement closed.");
+            } catch (SQLException e) {
+                System.err.println("Error closing PreparedStatement: " + e.getMessage());
+            }
         }
+
+
         if (conn != null) {
-            try { conn.close(); } catch (SQLException e) { /* ignore */ }
+            try {
+                conn.close();
+                System.out.println("DatabaseUtil: Connection closed.");
+            } catch (SQLException e) {
+                System.err.println("Error closing Connection: " + e.getMessage());
+            }
         }
     }
     
     public static void close(Connection conn, PreparedStatement stmt) {
         close(conn, stmt, null);
+    }
+
+    public static void close(Connection conn) {
+        close(conn, null, null);
     }
     
     public static String hashPassword(String password) {

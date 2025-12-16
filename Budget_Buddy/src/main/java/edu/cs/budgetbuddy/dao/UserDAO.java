@@ -167,14 +167,17 @@ public class UserDAO {
 
     public static User authenticate(String username, String password) {
         User user = findByUsername(username);
-        
+
         if (user != null) {
             String hashedInput = DatabaseUtil.hashPassword(password);
             if (hashedInput.equals(user.getPasswordHash())) {
                 updateLastLogin(user.getUserId());
+                System.out.println("UserDAO: Authentication successful for " + username);
                 return user;
             }
         }
+
+        System.out.println("UserDAO: Authentication failed for " + username);
         return null;
     }
 
