@@ -15,11 +15,13 @@ import edu.cs.budgetbuddy.dao.GoalDAO;
 import edu.cs.budgetbuddy.model.Goal;
 import edu.cs.budgetbuddy.model.User;
 
+// Servlet to handle goal-related actions: setup, edit, view status, add progress, delete
 @WebServlet("/goal")
 public class GoalServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    // Handle GET requests to display goal status, setup form, or edit form
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,6 +43,7 @@ public class GoalServlet extends HttpServlet {
         }
     }
 
+    // Handle POST requests to save, delete, or add progress to goal
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -64,6 +67,7 @@ public class GoalServlet extends HttpServlet {
         }
     }
 
+    // Display the current goal status to the user
     private void showGoalStatus(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -84,6 +88,7 @@ public class GoalServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/goal.jsp").forward(request, response);
     }
 
+    // Display the goal setup form to the user
     private void showSetupForm(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -103,6 +108,7 @@ public class GoalServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/setGoal.jsp").forward(request, response);
     }
 
+    // Display the goal edit form to the user
     private void showEditForm(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -120,6 +126,7 @@ public class GoalServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/setGoal.jsp").forward(request, response);
     }
 
+    // Process saving (creating or updating) a goal
     private void processSaveGoal(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -227,6 +234,7 @@ public class GoalServlet extends HttpServlet {
         }
     }
 
+    // Process deleting the user's goal
     private void processDeleteGoal(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -239,6 +247,7 @@ public class GoalServlet extends HttpServlet {
         }
     }
 
+    // Process adding progress to the user's goal
     private void processAddProgress(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -269,6 +278,7 @@ public class GoalServlet extends HttpServlet {
         }
     }
 
+    // Get the currently logged-in user from the session
     private User getLoggedInUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

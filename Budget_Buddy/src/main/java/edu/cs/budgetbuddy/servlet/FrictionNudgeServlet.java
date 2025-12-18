@@ -1,5 +1,17 @@
 package edu.cs.budgetbuddy.servlet;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import edu.cs.budgetbuddy.dao.GoalDAO;
 import edu.cs.budgetbuddy.dao.NudgeLogDAO;
 import edu.cs.budgetbuddy.dao.TransactionDAO;
@@ -12,22 +24,13 @@ import edu.cs.budgetbuddy.model.Transaction.Category;
 import edu.cs.budgetbuddy.model.User;
 import edu.cs.budgetbuddy.model.User.KnowledgeLevel;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.sql.Date;
-
+// Handle GET and POST requests for the friction nudge calculator
 @WebServlet("/calculator")
 public class FrictionNudgeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    // Handle GET requests to display the calculator form
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,6 +46,7 @@ public class FrictionNudgeServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/calculator.jsp").forward(request, response);
     }
 
+    // Handle POST requests to process the calculator input
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,6 +66,7 @@ public class FrictionNudgeServlet extends HttpServlet {
         }
     }
 
+    //  Calculate nudge details and show the result page
     private void calculateAndShowNudge(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -96,6 +101,7 @@ public class FrictionNudgeServlet extends HttpServlet {
             category = Category.fromDbValue(categoryStr);
         }
 
+        // Calculate work hours equivalent
         BigDecimal workHours = user.calculateWorkHours(amount);
 
         Goal goal = GoalDAO.findByUserId(user.getUserId());
@@ -134,6 +140,7 @@ public class FrictionNudgeServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/result.jsp").forward(request, response);
     }
 
+    // Process the user's decision to skip or buy
     private void processDecision(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -215,6 +222,7 @@ public class FrictionNudgeServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/decision.jsp").forward(request, response);
     }
 
+    // Generate a nudge message based on user knowledge level and spending details
     private String generateNudgeMessage(User user, BigDecimal amount, BigDecimal workHours,
                                         Category category, BigDecimal categorySpending,
                                         BigDecimal monthlyTotal, Goal goal) {
@@ -294,6 +302,7 @@ public class FrictionNudgeServlet extends HttpServlet {
         return message.toString();
     }
 
+    // Format work hours into a readable string
     private String formatWorkHours(BigDecimal workHours) {
         double hours = workHours.doubleValue();
         
@@ -307,6 +316,7 @@ public class FrictionNudgeServlet extends HttpServlet {
         }
     }
 
+    // Get the currently logged-in user from the session
     private User getLoggedInUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

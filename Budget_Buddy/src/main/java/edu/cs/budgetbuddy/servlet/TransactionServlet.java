@@ -19,11 +19,13 @@ import edu.cs.budgetbuddy.model.Transaction;
 import edu.cs.budgetbuddy.model.Transaction.Category;
 import edu.cs.budgetbuddy.model.User;
 
+// Servlet to handle transaction-related actions: viewing history, adding, deleting
 @WebServlet("/transaction")
 public class TransactionServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    // Handle GET requests to show transaction history or add form
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,7 +44,8 @@ public class TransactionServlet extends HttpServlet {
             showTransactionHistory(request, response, user);
         }
     }
-
+ 
+    // Handle POST requests to add or delete transactions
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,6 +68,7 @@ public class TransactionServlet extends HttpServlet {
         }
     }
 
+    // Display the transaction history with optional filtering
     private void showTransactionHistory(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -110,6 +114,7 @@ public class TransactionServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/transactions.jsp").forward(request, response);
     }
 
+    // Display the form to add a new transaction
     private void showAddForm(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -122,6 +127,7 @@ public class TransactionServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/addTransaction.jsp").forward(request, response);
     }
 
+    // Process adding a new transaction
     private void processAddTransaction(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -194,6 +200,7 @@ public class TransactionServlet extends HttpServlet {
         }
     }
 
+    // Process deleting a transaction
     private void processDeleteTransaction(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         
@@ -228,6 +235,7 @@ public class TransactionServlet extends HttpServlet {
         }
     }
 
+    // Get the currently logged-in user from the session
     private User getLoggedInUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

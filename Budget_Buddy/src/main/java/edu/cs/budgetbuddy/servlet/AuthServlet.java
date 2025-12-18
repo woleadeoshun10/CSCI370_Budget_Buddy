@@ -19,6 +19,8 @@ import edu.cs.budgetbuddy.util.DatabaseUtil;
 @WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
 
+    //Redirect to login or signup pages, or process login/signup form submissions.
+    //Also handle logout and profile viewing/updating.
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,6 +46,8 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
+    //Process login and signup form submissions.
+    //Also handle profile updates.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,6 +70,7 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
+    // Show login page
     private void showLoginPage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -79,12 +84,14 @@ public class AuthServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
     }
 
+    // Show signup page
     private void showSignupPage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
     }
 
+    // Show profile page
     private void showProfilePage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -103,6 +110,7 @@ public class AuthServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/profile.jsp").forward(request, response);
     }
 
+    // Handle logout
     private void logout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -115,6 +123,7 @@ public class AuthServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/auth?action=login&message=logged_out");
     }
 
+    // Process login form submission
     private void processLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -143,6 +152,8 @@ public class AuthServlet extends HttpServlet {
             request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
         }
     }
+
+    // Process signup form submission
     private void processSignup(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -244,6 +255,7 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
+    // Process profile update form submission
     private void processProfileUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -296,6 +308,7 @@ public class AuthServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/profile.jsp").forward(request, response);
     }
 
+    // Get the currently logged-in user from the session
     private User getLoggedInUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -304,6 +317,7 @@ public class AuthServlet extends HttpServlet {
         return null;
     }
 
+    // Preserve form data on signup page in case of errors
     private void preserveSignupFormData(HttpServletRequest request, 
                                         String username, String email,
                                         String hourlyWage, String monthlyBudget) {

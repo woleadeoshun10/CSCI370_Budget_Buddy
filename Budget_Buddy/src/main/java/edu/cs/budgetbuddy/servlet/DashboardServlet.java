@@ -1,5 +1,18 @@
 package edu.cs.budgetbuddy.servlet;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import edu.cs.budgetbuddy.dao.GoalDAO;
 import edu.cs.budgetbuddy.dao.NudgeLogDAO;
 import edu.cs.budgetbuddy.dao.TransactionDAO;
@@ -10,36 +23,12 @@ import edu.cs.budgetbuddy.model.Transaction;
 import edu.cs.budgetbuddy.model.Transaction.Category;
 import edu.cs.budgetbuddy.model.User;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-import java.util.Map;
-
-/**
- * DashboardServlet - The Main Hub of Budget Buddy
- * 
- * Displays all key statistics and quick links:
- * - Current streak and total saved
- * - Goal progress
- * - Monthly spending summary
- * - Skip rate (the key metric!)
- * - Recent activity
- * 
- * Endpoints:
- *   GET /dashboard -> Show dashboard
- */
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
-
+ 
     private static final long serialVersionUID = 1L;
 
+    // Handle GET requests to display the dashboard using user data from database
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,6 +44,7 @@ public class DashboardServlet extends HttpServlet {
         user = UserDAO.findById(userId);
         request.getSession().setAttribute("user", user);
 
+        //Set dashboard attributes
         int currentStreak = user.getCurrentStreak();
         int longestStreak = user.getLongestStreak();
         BigDecimal totalSaved = user.getTotalSaved();
@@ -95,6 +85,7 @@ public class DashboardServlet extends HttpServlet {
 
         int impulseCount = TransactionDAO.getMonthlyImpulseCount(userId);
 
+        // Determine skip rate status message and class
         String skipRateStatus;
         String skipRateClass;
         if (totalNudges == 0) {
@@ -111,6 +102,7 @@ public class DashboardServlet extends HttpServlet {
             skipRateClass = "danger";
         }
         
+        // Determine budget status message and class
         String budgetStatus;
         String budgetClass;
         if (budgetUsedPercent > 100) {
@@ -171,6 +163,7 @@ public class DashboardServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/dashboard.jsp").forward(request, response);
     }
 
+    // Get the currently logged-in user from the session
     private User getLoggedInUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
