@@ -1,21 +1,3 @@
-# Sprint 3 Burn-Down Chart  
-**Project:** Budget Buddy  
-**Student:** Adewole Adeoshun (Person C)  
-**Course:** CSCI 370  
-**Sprint Duration:** December 15 – December 18, 2025  
-**Due Date:** Thursday, December 18th at 11:59 PM  
-
----
-
-## Overview
-This document tracks my individual progress for **Sprint 3** of the *Budget Buddy* project using a burn-down chart methodology. The chart visualizes task completion over time and reflects daily work hours, ideal remaining tasks, and actual progress.
-
----
-
-## Sprint Goals
-The main objective of Sprint 3 was to implement additional JSP pages related to user goals, transactions, profiles, and UI polish, while continuing integration with the main application.
-
----
 
 ## Burn-Down Data
 
@@ -38,8 +20,8 @@ The main objective of Sprint 3 was to implement additional JSP pages related to 
 | T-8.3 | Create `transactions.jsp` | 12/15/2025 | Updated to GitHub |
 | T-9.3 | Update `result.jsp` for different levels | 12/16/2025 | Updated to GitHub |
 | T-11.3 | Create `profile.jsp` | 12/16/2025 | Updated to GitHub |
-| T-11.2 | Conduct user testing (3–5 people) | In progress | |
-| T-11.4 | Final UI polish | In progress | |
+| T-11.2 | Conduct user testing (3–5 people) | 12/17/2025 | Updated to Github |
+| T-11.4 | Final UI polish | 12/17/2025 | Updated to Github |
 
 ---
 
