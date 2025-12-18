@@ -19,3 +19,5 @@
 | T-1.3: Create User.java model                       | 12/06/2025               |               |                 |        |
 | T-1.4: Create UserDAO.java (create, findByUsername) | 12/06/2025                         |               |                 |        |
 | T-2.1: Add authenticate() to UserDAO                | 12/06/2025                         |               |                 |        |
+
+![alt text](Jeffy_Burndown.png)

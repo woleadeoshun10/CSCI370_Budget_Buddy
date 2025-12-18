@@ -34,3 +34,5 @@
 - All assigned tasks were completed ahead of the sprint deadline.
 - Actual remaining tasks dropped to zero by Day 4, indicating early sprint completion.
 - Work hours were consistent across sprint days.
+
+![alt text](Adewole_Burndown.png)

@@ -22,5 +22,5 @@
 |                                                                              |                 |            |                |       |
 | Note: Jeffy will begin constructing Sprint 3 models and DAOs starting Dec 10 |                 |            |                |       |
 
-
+![alt text](Jeffy_Burndown.png)
 

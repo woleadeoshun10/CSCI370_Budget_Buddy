@@ -47,3 +47,5 @@ The main objective of Sprint 3 was to implement additional JSP pages related to 
 All completed work was committed and pushed to GitHub during the sprint to ensure version control and team visibility.
 
 ---
+
+![alt text](Adewole_Burndown.png)

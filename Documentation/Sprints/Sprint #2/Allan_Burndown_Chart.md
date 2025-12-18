@@ -17,3 +17,5 @@
 | T-3.5: Generate basic nudge message - Person A                       |                    |             | 12/10/2025     |                 |
 | T-4.3: Add decision processing to FrictionNudgeServlet - Person A    |                    |             | 12/10/2025      |                 |
 | T-5.5: Update DashboardServlet with real data - Person A             |                    |             | 12/11/2025      |                 |
+
+![alt text](Allan_Burndown.png)

@@ -18,3 +18,5 @@
 | T-8.2: Add history view to TransactionServlet - Person A  |                 |                 | 12/15/2025      |                 |
 | T-9.1: Implement 3-tier nudge messages - Person A         |                 |                 | 12/15/2025      |                 |
 | T-11.2: Add profile action to AuthServlet - Person A      |                 |                 | 12/16/2025      |                 |
+
+![alt text](Allan_Burndown.png)
