@@ -1,7 +1,5 @@
 #  **Budget Buddy \- Project Documentation**
 
-**Version 1**
-
 **Team:** Allan Zhang, Titivut (Jeffy) Rabaib, Adewole Adeoshun  
 **Duration:** 3 Weeks (December 2025\)  
 **Technology:** Java 21, Servlets, JSP, MySQL, Apache Tomcat 10.1
@@ -109,7 +107,7 @@ We, the undersigned members of the Budget Buddy development team, hereby certify
 * Adhered to all academic integrity policies
 
 Signature: Person A \- Allan Zhang \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Date: \_12/17/2025\_\_\_  
-Signature: Person B \- Titivut (Jeffy) Rabaib \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Date: \_\_\_\_\_\_\_\_\_\_\_  
+Signature: Person B \- Titivut (Jeffy) Rabaib \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Date: \_12/18/2025\_\_\_  
 Signature: Person C \- Adewole Adeoshun \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Date: \_\_\_\_\_\_\_\_\_\_\_
 
 # 
@@ -130,7 +128,6 @@ Signature: Person C \- Adewole Adeoshun \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Date: \_\
 * Browser Compatibility: Tested on Chrome/Firefox only  
 * Mobile Layout: Basic responsive design, may need refinement  
 * Large Datasets: Dashboard slow with 1000+ transactions  
-* No SSL/HTTPS: HTTP only (not production-ready)
 
 # 
 
@@ -141,5 +138,3 @@ Signature: Person C \- Adewole Adeoshun \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Date: \_\
 **Deployment:** Functional on localhost, AWS-ready
 
 **Key Achievement:** Successfully validated that friction-based behavioral intervention reduces impulse spending by translating costs into work hours at the moment of temptation.
-
-*Document Version: 1.0 | Last Updated: December 2025*
