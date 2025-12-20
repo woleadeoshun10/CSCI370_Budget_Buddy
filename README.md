@@ -29,12 +29,14 @@ The installation folder contains a document with information such as the install
 
 Sprint completion was documented using GitHub Projects which can be accessed through the link here: (https://github.com/users/TitivutRabaib/projects/2)
 
+All code can be found inside of the Budget_Buddy folder.
+
 ---
 
 
 ## Project Structure
 ```
-budget-buddy/
+Budget_Buddy/
 ├── pom.xml                          # Maven configuration
 ├── sql/
 │   └── schema.sql                   # Database schema (4 tables)
